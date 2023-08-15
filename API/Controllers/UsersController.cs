@@ -5,7 +5,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace API.Controllers;
 
 [Authorize]
@@ -14,7 +13,8 @@ public class UsersController : BaseApiController
     private readonly IUserRepository _repository;
     private readonly IMapper _mapper;
 
-    public UsersController(IUserRepository repository, IMapper mapper)
+    public UsersController(IUserRepository repository,
+        IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
@@ -53,4 +53,5 @@ public class UsersController : BaseApiController
 
         return BadRequest("Failed to update user");
     }
+
 }

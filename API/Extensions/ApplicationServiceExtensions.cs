@@ -4,6 +4,7 @@ using API.DTOs;
 using API.Interfaces;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
+using SixLabors.ImageSharp.Web.DependencyInjection;
 
 namespace API.Extensions;
 
@@ -15,6 +16,7 @@ public static class ApplicationServiceExtensions
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddImageSharp();
 
         services.AddDbContext<DataContext>(opt =>
         opt.UseSqlServer(config.GetConnectionString("DefaultConnection")));
