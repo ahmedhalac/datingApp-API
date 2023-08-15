@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230815000552_InitialMigration")]
+    [Migration("20230815165821_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -86,6 +86,9 @@ namespace API.Data.Migrations
 
                     b.Property<DateTime>("LastActive")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("LookingFor")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");

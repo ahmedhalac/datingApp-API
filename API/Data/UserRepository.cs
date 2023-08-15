@@ -3,7 +3,7 @@ using API.Entities;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.DTOs;
+namespace API.Data;
 
 public class UserRepository : IUserRepository
 {
