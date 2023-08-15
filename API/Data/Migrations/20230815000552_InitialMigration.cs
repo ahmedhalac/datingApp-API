@@ -39,9 +39,10 @@ namespace API.Data.Migrations
                 name: "Photos",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    isMain = table.Column<bool>(type: "bit", nullable: false),
+                    IsMain = table.Column<bool>(type: "bit", nullable: false),
                     PublicId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },

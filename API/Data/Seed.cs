@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using API.Entities;
@@ -11,7 +10,11 @@ public class Seed
 {
     public static async Task SeedUsers(DataContext context)
     {
-        if (await context.Users.AnyAsync()) return;
+        if (await context.Users.AnyAsync())
+        {
+            // Database already contains records, no need to populate
+            return;
+        }
 
         var userData = await File.ReadAllTextAsync("Data/UserSeedData.json");
 

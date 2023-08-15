@@ -24,8 +24,14 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Photo", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PublicId")
                         .HasColumnType("nvarchar(max)");
@@ -35,9 +41,6 @@ namespace API.Data.Migrations
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("isMain")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
