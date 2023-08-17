@@ -11,13 +11,15 @@ builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
+
 
 app.UseCors(policy => policy
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials()
     .WithOrigins("https://localhost:4200"));
+
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -27,7 +29,7 @@ app.UseStaticFiles();
 
 app.MapControllers();
 
-
+// code for seeding users 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 

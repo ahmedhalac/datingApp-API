@@ -1,5 +1,5 @@
-﻿using API.Data;
-using API.Entities;
+﻿using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,11 +26,30 @@ public class UserRepository : IUserRepository
             .SingleOrDefaultAsync(x => x.UserName == username);
     }
 
-    public async Task<IEnumerable<User>> GetUsersAsync()
+    public async Task<PagedList<User>> GetUsersAsync(UserParams userParams)
     {
-        return await _context.Users
-            .Include(p => p.Photos)
-            .ToListAsync();
+        var query = _context.Users.AsQueryable();
+
+        //exclude logged in user from users list
+        query = query.Where(u => u.UserName != userParams.CurrentUsername);
+        query = query.Where(u => u.Gender == userParams.Gender);
+
+        var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
+        var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
+
+        query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+
+        query = userParams.OrderBy switch
+        {
+            "created" => query.OrderByDescending(u => u.Created),
+            _ => query.OrderByDescending(u => u.LastActive),
+
+        };
+
+        return await PagedList<User>.CreateAsync(
+            query.Include(p => p.Photos).AsNoTracking(),
+            userParams.PageNumber,
+            userParams.PageSize);
     }
 
     public async Task<bool> SaveAllAsync()

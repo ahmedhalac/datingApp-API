@@ -1,6 +1,7 @@
 ﻿using System;
 using API.Data;
 using API.DTOs;
+using API.Helpers;
 using API.Interfaces;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
@@ -15,8 +16,10 @@ public static class ApplicationServiceExtensions
     {
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ILikesRepository, LikesRepository>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddImageSharp();
+        services.AddScoped<LogUserActivity>();
 
         services.AddDbContext<DataContext>(opt =>
         opt.UseSqlServer(config.GetConnectionString("DefaultConnection")));

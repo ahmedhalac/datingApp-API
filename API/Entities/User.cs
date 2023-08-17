@@ -36,6 +36,11 @@ public class User
     //1 -> n. 1 to many relathionship User table with Photo
     public List<Photo> Photos { get; set; } = new();
 
+    // Likes given by this user
+    public List<UserLike> LikedByUsers { get; set; }
+    // Likes received by this user
+    public List<UserLike> LikedUsers { get; set; }
+
     public int GetAge()
     {
         return DateOfBirth.CalculateAge();
